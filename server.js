@@ -15,7 +15,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3001",
   "https://oxygen-customer.netlify.app",
-  "https://<your-staff-netlify>.netlify.app"
+  "https://oxygen-staff.netlify.app"
 ];
 
 app.use(cors({
