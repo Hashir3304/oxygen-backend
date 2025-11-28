@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import authMiddleware from "./middleware/auth.js";
 import { initDB } from "./db.js";
 import { createCustomersTable } from "./models/Customer.js";
 import { createTransactionsTable } from "./models/Transaction.js";
@@ -23,6 +24,8 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+
+app.use("/api", authMiddleware);
 
 // init DB tables
 initDB().then(async (db) => {
