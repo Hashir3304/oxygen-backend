@@ -38,4 +38,7 @@ app.use("/api", customerRoutes);
 app.use("/api", transactionRoutes);
 app.use("/api", analyticsRoutes);
 
+// Start backup system
+import "./backup/index.js";
+
 app.listen(8070, () => console.log("Backend running on port 8070"));
