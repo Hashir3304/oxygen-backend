@@ -83,6 +83,26 @@ router.get("/top-staff", async (req, res) => {
   res.json({ success: true, data: rows });
 });
 
+// OVERVIEW-KPI
+router.get("/overview", async (req, res) => {
+  const db = await initDB();
+  const totalCustomers = (await db.get(`SELECT COUNT(*) AS count FROM customers`)).count;
+  const totalScans = (await db.get(`SELECT COUNT(*) AS count FROM transactions`)).count;
+  const todayScans = (await db.get(`SELECT COUNT(*) AS count FROM transactions WHERE date(today, 'start of day') <= timestamp AND timestamp < date(today+1, 'start of day')`)).count;
+  const rewardsRedeemed = (await db.get(`SELECT COUNT(*) AS count FROM transactions WHERE type = 'redeem'`)).count;
+  const activeStaff = (await db.get(`SELECT COUNT(DISTINCT customer_id) AS count FROM transactions WHERE type = 'add_stamp'`)).count;
+  const activePromotions = 0; // Not implemented yet
+
+  res.json({
+    totalCustomers,
+    totalScans,
+    todayScans,
+    rewardsRedeemed,
+    activeStaff,
+    activePromotions
+  });
+});
+
 // TOTALS
 router.get("/totals", async (req, res) => {
   const db = await initDB();
